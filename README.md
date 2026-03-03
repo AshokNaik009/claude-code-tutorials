@@ -11,6 +11,7 @@ Each feature has working examples you can copy into your project and start using
 | Code reviewer agent | Subagents | [`examples/agents/`](examples/agents/) |
 | Auto-format + prompt logger | Hooks | [`examples/hooks/`](examples/hooks/) |
 | Tutorial toolkit | Plugins | [`examples/plugin/`](examples/plugin/) |
+| Dev marketplace | Marketplace + Plugins | [`examples/dev-marketplace/`](examples/dev-marketplace/) |
 | Ready-to-use install | All features | [`.claude/`](.claude/) |
 
 ## `.claude/` Directory Structure
@@ -389,9 +390,8 @@ my-plugin/
 │   └── reviewer.md
 ├── hooks/                    # Lifecycle hooks
 │   └── hooks.json
-├── commands/                 # Legacy commands (same as skills)
+├── commands/                 # Slash commands (user-invoked)
 ├── .mcp.json                # MCP server configs (optional)
-├── .lsp.json                # LSP server configs (optional)
 ├── settings.json            # Default settings (optional)
 └── README.md
 ```
@@ -442,6 +442,106 @@ claude --plugin-dir ./plugin-one --plugin-dir ./plugin-two
 - Create a team marketplace by hosting a git repo with plugin directories
 
 See: [`examples/plugin/`](examples/plugin/)
+
+---
+
+## Marketplaces
+
+A marketplace is a **catalog** of plugins defined by a `marketplace.json` file. Users add your marketplace, browse plugins, and install what they need — like an app store for Claude Code.
+
+### Marketplace Structure
+
+```
+my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json         # Catalog listing all plugins
+└── plugins/
+    ├── plugin-a/                # Each plugin is a full plugin directory
+    │   ├── .claude-plugin/
+    │   │   └── plugin.json
+    │   ├── commands/            # Slash commands (user-invoked)
+    │   ├── agents/              # Custom subagents
+    │   ├── skills/              # Skills (Claude auto-invokes)
+    │   └── hooks/
+    │       └── hooks.json
+    └── plugin-b/
+        └── ...
+```
+
+### marketplace.json Format
+
+```json
+{
+  "name": "dev-marketplace",
+  "owner": { "name": "Your Team" },
+  "metadata": {
+    "description": "What this marketplace offers",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "lint-tools",
+      "source": "./plugins/lint-tools",
+      "description": "Lint detection and auto-fix",
+      "version": "1.0.0",
+      "category": "code-quality",
+      "tags": ["linting", "eslint", "ruff"]
+    }
+  ]
+}
+```
+
+### Plugin Sources
+
+| Source | Format | Example |
+|--------|--------|---------|
+| Relative path | `"./plugins/my-plugin"` | Same repo |
+| GitHub | `{ "source": "github", "repo": "owner/repo" }` | Public/private repos |
+| Git URL | `{ "source": "url", "url": "https://..." }` | GitLab, Bitbucket, etc. |
+| npm | `{ "source": "npm", "package": "@org/plugin" }` | npm registry |
+
+### Using a Marketplace
+
+```bash
+# Add a marketplace (from GitHub)
+/plugin marketplace add your-org/your-repo
+
+# Add a local marketplace (for testing)
+/plugin marketplace add ./examples/dev-marketplace
+
+# Browse plugins
+/plugin
+
+# Install a plugin
+/plugin install lint-tools@dev-marketplace
+
+# Use the namespaced commands
+/lint-tools:lint-fix
+```
+
+### Team Auto-Install
+
+Add to your project's `.claude/settings.json` so teammates get prompted automatically:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "dev-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "your-org/claude-code-tutorials"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "lint-tools@dev-marketplace": true,
+    "security-tools@dev-marketplace": true
+  }
+}
+```
+
+See: [`examples/dev-marketplace/`](examples/dev-marketplace/)
 
 ---
 

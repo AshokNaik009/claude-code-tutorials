@@ -1,0 +1,9 @@
+{
+  "name": "lint-tools",
+  "description": "Lint detection and auto-fix for JS/TS and Python projects",
+  "version": "1.0.0",
+  "author": {
+    "name": "Claude Code Tutorials"
+  },
+  "license": "MIT"
+}

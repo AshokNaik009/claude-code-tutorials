@@ -1,0 +1,9 @@
+{
+  "name": "code-quality",
+  "description": "Code reviewer agent with auto-format hooks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Claude Code Tutorials"
+  },
+  "license": "MIT"
+}

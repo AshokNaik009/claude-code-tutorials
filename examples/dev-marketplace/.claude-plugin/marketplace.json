@@ -1,0 +1,50 @@
+{
+  "name": "dev-marketplace",
+  "owner": {
+    "name": "Claude Code Tutorials",
+    "email": "tutorials@example.com"
+  },
+  "metadata": {
+    "description": "A tutorial marketplace with lint, security, and code quality plugins",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "lint-tools",
+      "source": "./plugins/lint-tools",
+      "description": "Lint detection and auto-fix for JS/TS and Python projects",
+      "version": "1.0.0",
+      "author": {
+        "name": "Claude Code Tutorials"
+      },
+      "category": "code-quality",
+      "tags": ["linting", "eslint", "ruff", "auto-fix"],
+      "license": "MIT"
+    },
+    {
+      "name": "security-tools",
+      "source": "./plugins/security-tools",
+      "description": "OWASP Top 10 security scanner for codebases",
+      "version": "1.0.0",
+      "author": {
+        "name": "Claude Code Tutorials"
+      },
+      "category": "security",
+      "tags": ["security", "owasp", "vulnerability", "audit"],
+      "license": "MIT"
+    },
+    {
+      "name": "code-quality",
+      "source": "./plugins/code-quality",
+      "description": "Code reviewer agent with auto-format hooks",
+      "version": "1.0.0",
+      "author": {
+        "name": "Claude Code Tutorials"
+      },
+      "category": "code-quality",
+      "tags": ["review", "formatting", "prettier", "black"],
+      "license": "MIT"
+    }
+  ]
+}
