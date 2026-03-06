@@ -23,8 +23,12 @@ This repo includes a ready-to-use `.claude/` directory with all features install
 ├── skills/                        # Skills (= custom slash commands)
 │   ├── lint-fix/
 │   │   └── SKILL.md              # /lint-fix — find and fix lint errors
-│   └── security-review/
-│       └── SKILL.md              # /security-review — scan for vulnerabilities
+│   ├── security-review/
+│   │   └── SKILL.md              # /security-review — scan for vulnerabilities
+│   ├── skill-creator/
+│   │   └── SKILL.md              # /skill-creator — create and improve skills
+│   └── skill-evals/
+│       └── SKILL.md              # /skill-evals — test and benchmark skills
 ├── agents/                        # Custom subagents
 │   └── code-reviewer.md          # Code review subagent (Sonnet, read-only)
 ├── hooks/                         # Hook scripts
